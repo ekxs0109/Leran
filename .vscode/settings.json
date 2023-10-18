@@ -9,6 +9,12 @@
 		"string_view": "cpp",
 		"initializer_list": "cpp",
 		"ranges": "cpp",
-		"algorithm": "cpp"
+		"algorithm": "cpp",
+		"stack": "cpp",
+		"queue": "cpp",
+		"*.tcc": "cpp",
+		"type_traits": "cpp",
+		"set": "cpp",
+		"unordered_set": "cpp"
 	}
 }

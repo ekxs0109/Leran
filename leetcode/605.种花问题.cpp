@@ -16,6 +16,9 @@ using namespace std;
 // [1,0,1,0,1,0,1] n=1
 //  p       q  3 5 7
 
+// 时间复杂度：O(n)
+// 空间复杂度：O(1)
+
 // @lc code=start
 class Solution
 {

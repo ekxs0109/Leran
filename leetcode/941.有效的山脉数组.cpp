@@ -25,15 +25,15 @@ public:
     bool validMountainArray(vector<int> &arr)
     {
         int peakNum = INT_MIN, len = arr.size();
-        int isClimb = -1; // -1 no , 1 readly, >1 ing, 0 down
+        int climbState = -1; // -1 no , 1 readly, >1 ing, 0 down
 
         for (auto num : arr)
         {
-            switch (isClimb)
+            switch (climbState)
             {
             case -1:
                 peakNum = num;
-                isClimb = 1;
+                climbState = 1;
                 break;
 
             case 0:
@@ -49,10 +49,10 @@ public:
             default:
                 if (num < peakNum)
                 {
-                    if (isClimb == 1)
+                    if (climbState == 1)
                         return false;
                     peakNum=num;
-                    isClimb = 0;
+                    climbState = 0;
                 }
                 else if (num == peakNum)
                 {
@@ -61,13 +61,13 @@ public:
                 else
                 {
                     peakNum = num;
-                    isClimb++;
+                    climbState++;
                 }
                 break;
             }
         }
 
-        return isClimb == 0;
+        return climbState == 0;
     }
 };
 // @lc code=end

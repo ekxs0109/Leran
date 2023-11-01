@@ -49,6 +49,9 @@
 		"stdexcept": "cpp",
 		"streambuf": "cpp",
 		"typeinfo": "cpp",
-		"climits": "cpp"
+		"climits": "cpp",
+		"bitset": "cpp",
+		"cstring": "cpp",
+		"numbers": "cpp"
 	}
 }

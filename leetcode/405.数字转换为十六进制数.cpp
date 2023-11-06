@@ -7,16 +7,38 @@
 using namespace std;
 // @before-stub-for-debug-end
 
+// 时间复杂度：O(k)，其中 k 是整数的十六进制数的位数，这道题中 k=8。无论 num\textit{num}num 的值是多少，都需要遍历 num 的十六进制表示的全部数位。
+
+// 空间复杂度：O(k)，其中 k 是整数的十六进制数的位数，这道题中 k=8。空间复杂度主要取决于中间结果的存储空间，这道题中需要存储 num 的十六进制表示中的除了前导零以外的全部数位。
+
+
 /*
  * @lc app=leetcode.cn id=405 lang=cpp
  *
  * [405] 数字转换为十六进制数
  */
 
+
+
 // @lc code=start
 class Solution
 {
 public:
+      string toHex(int num) {
+        if (num == 0) {
+            return "0";
+        }
+        string sb;
+        for (int i = 7; i >= 0; i --) {
+            int val = (num >> (4 * i)) & 0xf; // & 0xf 反码
+            if (sb.length() > 0 || val > 0) {
+                char digit = val < 10 ? (char) ('0' + val) : (char) ('a' + val - 10);
+                sb.push_back(digit);
+            }
+        }
+        return sb;
+    }
+
     inline string padLeft(const string &str, int length, char paddingChar)
     {
         if (str.length() >= length)
@@ -28,7 +50,7 @@ public:
         paddedStr += str;
         return paddedStr;
     }
-    string toHex(int num)
+    string toHexBySelf(int num)
     {
         if(num ==0) return "0";
         bool negative = num < 0;

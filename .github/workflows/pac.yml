@@ -19,7 +19,7 @@ jobs:
       env:
         PROXY: ${{ secrets.PROXY }}
       run: |
-        cd pac && python3 build.py
+        cd pac && python3 build.py; cd ..
         cp ./pac/dist/pac-gfwlist-17mon.txt ./pac/dist/pac
         sed -i "s/__PROXY__/$PROXY/g" ./pac/dist/pac
 

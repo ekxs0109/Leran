@@ -2,6 +2,7 @@
 #include <vector>
 #include <string>
 #include <unordered_map>
+#include <stack>
 #include "commoncppproblem20.h"
 
 using namespace std;
@@ -19,18 +20,24 @@ using namespace std;
 class Solution
 {
 public:
-    bool dp(string s, int i,char lastCh,)
-    {
-        if(s[i] != lastCh) return false;
-
-        return dp(s,i+1, s[i]);
-    }
     bool isValid(string s)
     {
-        unordered_map<char
-
-        if (s.size() % 2 != 0)
-            return false;
+        unordered_map<char,char> dict = {
+            {'(',')'},
+            {'{','}'},
+            {'[',']'}
+        };
+        stack<char> st;
+        for(auto ch: s){
+            if(!dict[ch]){
+                if(st.empty()) return false;
+                if(st.top() != ch) return false;
+                st.pop();
+            }else{
+                st.push(dict[ch]);
+            }
+        }
+        return st.empty();
     }
 };
 // @lc code=end

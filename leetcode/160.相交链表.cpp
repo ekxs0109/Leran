@@ -6,6 +6,11 @@
 using namespace std;
 // @before-stub-for-debug-end
 
+// m+n+m
+// n+m+n
+// 时间复杂度：O(m+n)
+// 空间复杂度：O(1)
+
 /*
  * @lc app=leetcode.cn id=160 lang=cpp
  *
@@ -23,29 +28,15 @@ using namespace std;
  */
 class Solution {
 public:
-    ListNode *reverse(ListNode *root){
-        ListNode * prev = nullptr;
-        ListNode * next;
-        while(root!=nullptr){
-            next = root->next;
-            root->next =prev;
-            prev = root;
-            root = next;
-        }
-        return prev;
-    }
     ListNode *getIntersectionNode(ListNode *headA, ListNode *headB) {
-        headA= reverse(headA);
-        headB= reverse(headB); 
-
-        while(headA != nullptr && headB !=nullptr){
-            if(headA->val == headB->val){
-                return headA;
-            }
-            headA = headA->next;
-            headB = headB->next;
+        if(headA == nullptr || headB == nullptr) return nullptr;
+        ListNode * nodeA = headA;
+        ListNode * nodeB = headB;
+        while(nodeA !=nodeB){
+            nodeA = nodeA ==nullptr ? headB : nodeA->next; // 同时走，如果长度不一致 ，走完一圈后，就能过刨除两条链表长度的差距
+            nodeB = nodeB ==nullptr ? headA : nodeB->next;
         }
-        return nullptr;
+        return nodeA;
     }
 };
 // @lc code=end

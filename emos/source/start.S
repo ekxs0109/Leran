@@ -1,7 +1,7 @@
 	#include "os.h"
 
 	// 声明本地以下符号是全局的，在其它源文件中可以访问
-	.global _start
+	.global _start, timer_init
 
 	// 指定以下的代码生成16位的机器指令，这样才能在启动时的实模式下运行
   	.code16
@@ -26,6 +26,7 @@ read_disk:
 	# ============= 进入保护模式 =============
 	cli // 关闭中断
 	lgdt [gdt_desc] // LGDT和SGDT分别用于加载和保存GDTR寄存器的内容
+	lidt [idt_desc]
 	mov $1, %eax
 	lmsw %ax // 设置cr0的PE位
 	jmp $KERNEL_CODE_SEG, $_start_32 // 跳转相对地址 
@@ -60,11 +61,31 @@ _start_32:
 	mov %eax, %cr0 // 写入cr0
 
 
+	sti // 开启中断
 
 	jmp . 
+
+timer_init:
+	push %ds // 保存数据段寄存器
+	pusha // 保存寄存器
+	mov $0x20, %ax
+	outb %al, $0x20
+
+	popa // 恢复寄存器
+	pop %ds // 恢复数据段寄存器
+
+	iret // 中断返回
+
+task_0_entry:
+	jmp .
+
 
 gdt_desc:
 	.word (256*8) - 1 // 界限
 	.long GDT_TABLE // 基址
+
+idt_desc:
+	.word (256*8) - 1 // 界限
+	.long IDT_TABLE // 基址
 
 
